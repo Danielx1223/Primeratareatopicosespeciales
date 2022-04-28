@@ -6,11 +6,11 @@ const router = express.Router();
 const controller = require('./controller');
 
 /*
- * /api/v1/tweets        POST    Created  AGREGAR
- * /api/v1/tweets        GET     Read all LISTAR todo
- * /api/v1/tweets/:id    GET     Read     LISTAR ESPECIFICO
- * /api/v1/tweets/:id    PUT     Update   EDITAR
- * /api/v1/tweets/:id    DELETE  Delete   ELIMINAR
+ * /api/v1/task        POST    Created  AGREGAR
+ * /api/v1/task        GET     Read all LISTAR todo
+ * /api/v1/task/:id    GET     Read     LISTAR ESPECIFICO
+ * /api/v1/task/:id    PUT     Update   EDITAR
+ * /api/v1/task/:id    DELETE  Delete   ELIMINAR
  */
 
 // Forma de simplificar tantos get and post
