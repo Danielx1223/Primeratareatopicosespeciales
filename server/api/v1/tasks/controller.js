@@ -1,6 +1,6 @@
 const tasks = [];
 
-exports.all = (req, res, next) => {
+exports.all = (req, res) => {
   const { query = {} } = req; // metiendo valores
   res.json({
     data: tasks,
@@ -11,7 +11,7 @@ exports.all = (req, res, next) => {
 };
 
 // Mostrando la info que coloco en postmant desde body.
-exports.create = (req, res, next) => {
+exports.create = (req, res) => {
   const { body = {} } = req;
   const createdAt = { ...body, creado: new Date() }; // // Degradamos (extraemos valores del array body y lo metemos en data)
   tasks.push(createdAt);
@@ -20,7 +20,7 @@ exports.create = (req, res, next) => {
   });
 };
 
-exports.read = (req, res, next) => {
+exports.read = (req, res) => {
   const { params = {} } = req;
   const { pag = '' } = params; // const id = params.id
 
@@ -34,7 +34,7 @@ exports.read = (req, res, next) => {
   });
 };
 
-exports.update = (req, res, next) => {
+exports.update = (req, res) => {
   const { body = {}, params = {} } = req;
   const updateAt = { ...body, editado: new Date() }; // Fecha de edicion
   const { pag = '' } = params; // const id = params.id
@@ -55,7 +55,7 @@ exports.update = (req, res, next) => {
   });
 };
 
-exports.delete = (req, res, next) => {
+exports.delete = (req, res) => {
   const { params = {} } = req; // Parametro de la URL
   const { pag = '' } = params; // const id = params.id
 
