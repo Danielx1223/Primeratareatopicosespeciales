@@ -20,24 +20,26 @@ router.route('/')
   .get(controller.readAll)
   .post([
     check('description', 'Description is a mandatory field').not().isEmpty(),
-    check('author', 'Author is a mandatory field').not().isEmpty(),
+    check('userID', 'user is a mandatory field').isMongoId(),
     validateFields
   ], controller.create);
+
+router.param('id', controller.id);
 
 router
   .route('/:id')
   .get([
-    param('id', 'id should be a numeric value').toInt().isNumeric(),
+    param('id', 'id should be a valid value').isMongoId(),
     validateFields
-  ], controller.readById)
+  ], controller.read)
   .put([
-    param('id', 'id should be a numeric value').toInt().isNumeric(),
+    param('id', 'id should be a valid value').isMongoId(),
     check('description', 'Description is a mandatory field').not().isEmpty(),
-    check('author', 'Author is a mandatory field').not().isEmpty(),
+    check('userID', 'userID is a mandatory field').isMongoId(),
     validateFields
   ], controller.update)
   .delete([
-    param('id', 'id must be a numeric value').toInt().isNumeric(),
+    param('id', 'id must be a valid value').isMongoId(),
     validateFields
   ], controller.delete);
 

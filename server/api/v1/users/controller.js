@@ -2,23 +2,24 @@ const { Model } = require('./model');
 
 exports.readAll = async (req, res) => {
   try {
-    const tasks = await Model.find({}).populate('userID');
-    res.json(tasks);
+    const users = await Model.find({});
+    res.json(users);
   } catch (error) {
     next(error);
   }
 };
 
+// Mostrando la info que coloco en postmant desde body.
 exports.create = async (req, res) => {
-  const { description = 'No description', userID = '' } = req.body;
-
+  const { firstname = '', lastname = '', email = '' } = req.body;
+  const document = new Model({
+    firstname,
+    lastname,
+    email
+  });
   try {
-    const document = new Model({
-      description,
-      userID
-    });
     const data = await document.save();
-    res.status(201).json(data);
+    res.json(data);
   } catch (error) {
     next(error);
   }
@@ -29,7 +30,7 @@ exports.id = async (req, res, next) => {
   const { id = '' } = params; // const id = params.id
 
   try {
-    const data = await Model.findById(id).populate('userID');
+    const data = await Model.findById(id).exec();
 
     if (data) {
       req.doc = data;
