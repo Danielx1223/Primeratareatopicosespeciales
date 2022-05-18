@@ -1,9 +1,23 @@
 const express = require('express');
 const api = require('./api/v1');
+const config = require('./config/');
+const { expressjwt: jwt } = require("express-jwt");
 
 const app = express();
 
 app.use(express.json());
+
+app.use(
+  jwt({
+    secret: config.jwtSecret,
+    algorithms: ["HS256"],
+  }).unless({
+    path: [
+      "/api/v1/users/login",
+      "/api/v1/users/register"
+    ]
+  })
+);
 
 app.use('/api/v1', api);
 

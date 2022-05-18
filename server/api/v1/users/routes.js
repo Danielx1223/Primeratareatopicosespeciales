@@ -17,13 +17,7 @@ const { validateFields } = require('../../middlewares/validateFields');
 
 // Forma de simplificar tantos get and post
 router.route('/')
-  .get(controller.readAll)
-  .post([
-    check('firstname', 'firstname is a mandatory field').not().isEmpty(),
-    check('lastname', 'lastname is a mandatory field').not().isEmpty(),
-    check('email', 'email is a mandatory field').isEmail(),
-    validateFields
-  ], controller.create);
+  .get(controller.readAll);
 
 router.param('id', controller.id);
 
@@ -44,5 +38,25 @@ router
     param('id', 'Id not found').isMongoId(),
     validateFields
   ], controller.delete);
+
+router.
+  route('/login')
+  .post([
+    check('email', 'email is a mandatory field').isEmail(),
+    check('password', 'Password is a mandatory field').notEmpty(),
+    validateFields
+  ], controller.login);
+
+router
+  .route('/register')
+  .post([
+    check('firstname', 'firstname is a mandatory field').not().isEmpty(),
+    check('lastname', 'lastname is a mandatory field').not().isEmpty(),
+    check('password', 'password is a mandatory field').notEmpty(),
+    check('password', 'password is a mandatory field').isLength({ min: 3 }),
+    check('email', 'email is a mandatory field').isEmail(),
+    validateFields
+  ], controller.create);
+
 
 module.exports = router;

@@ -1,7 +1,8 @@
 require('dotenv').config();
 
 const config = {
-  port: process.env.PORT | 3000,
+  port: process.env.PORT | 4000,
+  jwtSecret: process.env.JwtSecret || "muyFacil1234",
   database: {
     protocol: process.env.DB_PROTOCOL || "mongodb",
     url: process.env.DB_URL || "127.0.0.1/tasks",

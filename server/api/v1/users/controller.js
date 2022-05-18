@@ -1,6 +1,8 @@
+const jwt = require('jsonwebtoken');
 const { Model } = require('./model');
+const config = require('../../../config/');
 
-exports.readAll = async (req, res) => {
+exports.readAll = async (req, res, next) => {
   try {
     const users = await Model.find({});
     res.json(users);
@@ -9,13 +11,29 @@ exports.readAll = async (req, res) => {
   }
 };
 
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await Model.findOne({ email });
+    if (user && await user.validatePassword(password)) {
+      const token = jwt.sign({ user }, config.jwtSecret);
+      return res.json(token);
+    } else {
+      return res.status(401).json('Invalid user/password');
+    }
+  } catch (error) {
+    res.status(401).json('Invalid user/password');
+  }
+}
+
 // Mostrando la info que coloco en postmant desde body.
-exports.create = async (req, res) => {
-  const { firstname = '', lastname = '', email = '' } = req.body;
+exports.create = async (req, res, next) => {
+  const { firstname = '', lastname = '', email = '', password = '' } = req.body;
   const document = new Model({
     firstname,
     lastname,
-    email
+    email,
+    password
   });
   try {
     const data = await document.save();
@@ -65,7 +83,7 @@ exports.update = async (req, res, next) => {
       data,
     });
   } catch (error) {
-    netxt(error);
+    next(error);
   }
 };
 
