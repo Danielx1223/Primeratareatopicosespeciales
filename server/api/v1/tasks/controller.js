@@ -10,7 +10,8 @@ exports.readAll = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const { description = 'No description', userID = '' } = req.body;
+  const { description = 'No description' } = req.body;
+  const userID = req.auth.user._id;
 
   try {
     const document = new Model({

@@ -20,7 +20,6 @@ router.route('/')
   .get(controller.readAll)
   .post([
     check('description', 'Description is a mandatory field').not().isEmpty(),
-    check('userID', 'user is a mandatory field').isMongoId(),
     validateFields
   ], controller.create);
 
