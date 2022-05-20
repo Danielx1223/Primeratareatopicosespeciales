@@ -34,7 +34,6 @@ router
   .put([
     param('id', 'id should be a valid value').isMongoId(),
     check('description', 'Description is a mandatory field').not().isEmpty(),
-    check('userID', 'userID is a mandatory field').isMongoId(),
     validateFields
   ], controller.update)
   .delete([
