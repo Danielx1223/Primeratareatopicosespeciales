@@ -2,7 +2,8 @@ const { Model } = require('./model');
 
 exports.readAll = async (req, res) => {
   try {
-    const tasks = await Model.find({}).populate('userID');
+    const userID = req.auth.user._id;
+    const tasks = await Model.find({ userID }).populate('userID');
     res.json(tasks);
   } catch (error) {
     next(error);
